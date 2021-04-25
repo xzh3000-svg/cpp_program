@@ -1,5 +1,4 @@
 #include<iostream>
-
 int main()
 {
 	///前缀std::指出名字cout和endl是定义在名为std的命名空间（namespace）中的，::是作用域运算符
