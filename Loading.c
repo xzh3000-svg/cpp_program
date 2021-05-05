@@ -53,6 +53,7 @@ void Sort(int w[],int t[],int n){
 //	}
 }
 
+
 //参考代码
 #include<stdio.h>
 struct box{//保存箱子重量及序号 
