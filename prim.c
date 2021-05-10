@@ -28,7 +28,7 @@ typedef struct{
 //初始化一个无向图
 void createUDG(graph *G){
 	int i,j,k,a,b;
-	printf("输入顶点数和边数:  ");
+	printf("输入顶点数和边数: ");
 	scanf("%d %d",&(G->n),&(G->e));
 	printf("输入顶点信息:");
 	for(i = 0;i < (G->n);i++){
@@ -60,36 +60,62 @@ void createUDG(graph *G){
 
 int main(){
 	graph G;
-	int i,j,min;
-	int A[N][N];	//用于辅助邻接矩阵
+	int i,j,k,m,min = 0;
+	int adress;	//记录当前选取的点的位置
+	//int A[N][N];	//用于辅助邻接矩阵
 	createUDG(&G);
 	G.vers[0].d = 0;
 	G.vers[0].key = 1;
-	memcpy(A,G.arcs,sizeof(G.arcs));	//A用于寻找最短路径，原矩阵用于复制d和p
+	//memcpy(A,G.arcs,sizeof(G.arcs));	//A用于寻找最短路径，原矩阵用于复制d和p
 	for ( i = 1; i < (G.n); i++)
 	{
 		G.vers[i].d = G.arcs[i][0];
 		G.vers[i].p = G.vers[0].name; 
 	}
-	// for (i = 1; i < (G.n); i++)
-	// {
-	// 	for ( j = 1 ; j < (G.n); j++)
-	// 	{
-	// 		if(G.vers[j].key == 0){
-				
-	// 		}else{
-
-	// 		}
-	// 	}
+	for (i = 1; i < (G.n); i++)
+	{
+		//寻找一个未被选取的点最为最小值
+		for (k = 1; k < (G.n); k++)
+		{
+			if (G.vers[k].key == 0)
+			{
+				min = G.vers[k].d;
+				adress = k;
+				break;
+			}
+			
+		}
 		
-	// }
-	
-	// printf("Output\n");
-	// for(i = 0;i < (G.n);i++){
-	// 	for(j = 0;j <(G.n);j++){
-	// 		printf("%d\t",G.arcs[i][j]);
-	// 	}
-	// 	printf("\n");
-	// }
+		for ( j = 1 ; j < (G.n); j++)
+		{
+			if(G.vers[j].key == 0 && G.vers[j].d < min){
+				min = G.vers->d;
+				adress = j; 
+			}else{
+				continue;
+			}
+		}
+		G.vers[adress].d = min;
+		G.vers[adress].key = 1;
+		//选取一个点后，更新未选取的点的d和p
+		for ( m = 0; m < (G.n); m++)
+		{
+			if(G.vers[m].key == 0){
+				if (G.arcs[m][adress] < G.vers[m].d)
+				{
+					G.vers[m].d = G.arcs[m][adress];
+					G.vers[m].p = G.vers[adress].name;
+				}
+			} 
+		}
+	}
+	printf("Output\n");
+	for(i = 0;i < (G.n);i++){
+		printf("%d\t",G.vers[i].name);
+		printf("%d\t",G.vers[i].d);
+		printf("%d\t",G.vers[i].p);
+		printf("\n");
+	}
 	return 0;
 }
+
