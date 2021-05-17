@@ -33,6 +33,7 @@ void knapsack()
     //使用冒泡排序按照单位价值排序
     for ( i = 0; i < n-1; i++)
     {
+        //从1开始排序，只要j=1即可
         for ( j = 1; j <= n-1-i ; j++)
         {
             if (perprice[j] < perprice[j+1])
@@ -66,6 +67,7 @@ void backtrack(int i)
         if (cp > bestprice)
         {
             bestprice = cp;
+            //每次得出一个最优解应当记录最优解的解
             for ( int j = 1; j <= n; j++)
             {
                 bestput[j] = put[j]; 
