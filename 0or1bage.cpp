@@ -33,7 +33,6 @@ void knapsack()
     //使用冒泡排序按照单位价值排序
     for ( i = 0; i < n-1; i++)
     {
-        //从1开始排序，只要j=1即可
         for ( j = 1; j <= n-1-i ; j++)
         {
             if (perprice[j] < perprice[j+1])
@@ -67,36 +66,63 @@ void backtrack(int i)
         if (cp > bestprice)
         {
             bestprice = cp;
-            //每次得出一个最优解应当记录最优解的解
+            
             for ( int j = 1; j <= n; j++)
             {
                 bestput[j] = put[j]; 
             }
             return;
         }
+    }else
+    {
+        for (int t = 0; t <=1; t++)
+        {
+            put[i] = t;
+            //进入右子树
+            if (t==0)
+            {
+                if (bound(i+1) > bestprice)
+                {
+                    backtrack(i+1);
+                }
+            }else   //进入左子树
+            {
+                if (cw + weight[i] <= c)
+                {
+                    cw += weight[i];
+                    put[i] = 1;
+                    cp += value[i];
+                    backtrack(i+1);
+                    //回溯
+                    cw -= weight[i];
+                    cp -= value[i];
+                    put[i] = 0;
+                }  
+            }   
+        }
     }
     
-    //如若左子节点可行，则直接搜索左子树;
-    //对于右子树，先计算上界函数，以判断是否将其减去
+    // //如若左子节点可行，则直接搜索左子树;
+    // //对于右子树，先计算上界函数，以判断是否将其减去
 
-    //搜索左子树
-    if (cw + weight[i] <= c)
-    {
-        cw += weight[i];
-        put[i] = 1;
-        cp += value[i];
-        backtrack(i+1);
-        //回溯
-        cw -= weight[i];
-        cp -= value[i];
-        put[i] = 0; 
-    }
-    //搜索右子树
-    if (bound(i+1) > bestprice) //如若符合条件则搜索右子树
-    {
-        put[i] = 0;
-        backtrack(i+1);
-    }
+    // //搜索左子树
+    // if (cw + weight[i] <= c)
+    // {
+    //     cw += weight[i];
+    //     put[i] = 1;
+    //     cp += value[i];
+    //     backtrack(i+1);
+    //     //回溯
+    //     cw -= weight[i];
+    //     cp -= value[i];
+    //     put[i] = 0; 
+    // }
+    // //搜索右子树
+    // if (bound(i+1) > bestprice) //如若符合条件则搜索右子树
+    // {
+    //     put[i] = 0;
+    //     backtrack(i+1);
+    // }
 }
 
 
