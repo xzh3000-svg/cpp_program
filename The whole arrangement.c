@@ -1,6 +1,8 @@
+
 #include <stdio.h>
 #include <stdlib.h>
 
+//这里全排列使用的是回溯法吗？对的，只不过没有限制函数吧，全部搜索一遍，把所有解都解出来
 void perm(char list[],int k,int m);	//list：待全排列元素。k：当前要选前缀位置，m：m+1个元素（下标：0-m） 
 void swap(char *a,char *b);
 
