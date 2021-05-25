@@ -18,9 +18,9 @@ void PrintPrev(int prev[],int v0,int vn);
 //主函数
 int main()
 {
-    //给出有向网的顶点数组
+    //给出有向图的顶点数组
     char *Vertex[N]={"V1", "V2", "V3", "V4", "V5"};
-    //给出有向网的邻接矩阵
+    //给出有向图的邻接矩阵
     int cost[N][N]={
 		{0, 10, M, 30, 100},
         {M, 0, 50, M, M},
@@ -30,7 +30,7 @@ int main()
     };
     int distance[N]; //存放求得的最短路径长度
     int prev[N];  //存放求得的最短路径
-	int i;
+    int i;
     //调用Dijkstra算法函数，求顶点V1到其余各点的最短路径
     //参数：邻接矩阵、顶点数、出发点的下标、 结果数组
     Dijkstra(cost, 0, distance, prev);
@@ -72,14 +72,15 @@ void Dijkstra(int cost[][N],int v0,int distance[],int prev[]){
 		mindis = M;
 		u = v0;
 		//先求离出发点最近的顶点
-		//我觉得这里j从1开始也可以，应为我不应该计算出发点 
+		//我觉得这里j从1开始也可以，应为我不应该计算出发点
+		//需要考虑源点下标不是0的情况
 		for(j = 0;j < N;j++){
 			if(s[j] == 0 && distance[j] < mindis){	//这里s[j] == 0就已经排除了源点，以及已经找到最短路径的顶点 
 				mindis = distance[i];	//找出最小值 
 				u = j;	//u用来记录距离出发点最近顶点的下标 
 			}
 		}
-		s[u] = i;
+		s[u] = 1;
 		//选取了最短顶点（下标为i）之后，需要更新源点到其他没有选取顶点的最短距离 
 		for(j = 0;j < N;j++){
 			if(s[j] == 0 && cost[u][j] < M){
